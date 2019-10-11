@@ -1,5 +1,6 @@
 import React from 'react';
-import { Orientation } from '../../domain/Hoover';
+import { GridShape } from '../../domain/Grid';
+import { HooverShape, Orientation } from '../../domain/Hoover';
 import Grid from '../Grid';
 import GridForm from '../GridForm';
 import HooverForm from '../HooverForm';
@@ -8,15 +9,8 @@ export interface IAppProps {
 }
 
 export interface IAppStates {
-  grid: {
-    x: number;
-    y: number;
-  };
-  hoover: {
-    x: number;
-    y: number;
-    orientation: Orientation
-  };
+  grid: GridShape;
+  hoover: HooverShape;
 }
 
 export class App extends React.Component<IAppProps, IAppStates> {
@@ -35,7 +29,7 @@ export class App extends React.Component<IAppProps, IAppStates> {
     };
   }
 
-  handleGridSubmit = (gridSize: { x: number, y: number }) => {
+  handleGridSubmit = (gridSize: GridShape) => {
     this.setState({
       ...this.state,
       grid: {
@@ -44,7 +38,7 @@ export class App extends React.Component<IAppProps, IAppStates> {
     });
   }
 
-  handlHooverSubmit = (hooverPosition: { x: number, y: number, orientation: Orientation }) => {
+  handlHooverSubmit = (hooverPosition: HooverShape) => {
     this.setState({
       ...this.state,
       hoover: {
@@ -57,23 +51,20 @@ export class App extends React.Component<IAppProps, IAppStates> {
     return (
       <div className="container">
         <div className="row">
-          <div className="col">
+          <div className="col-md-6">
             <Grid
-              rowsLength={this.state.grid.x}
-              colsLength={this.state.grid.y}
               hoover={this.state.hoover}
+              {...this.state.grid}
             />
           </div>
-          <div className="col">
+          <div className="col-md-6">
             <fieldset>
-              <GridForm x={this.state.grid.x} y={this.state.grid.y} handleSubmit={this.handleGridSubmit} />
+              <GridForm handleSubmit={this.handleGridSubmit} {...this.state.grid} />
             </fieldset>
             <fieldset>
               <HooverForm
-                x={this.state.hoover.x}
-                y={this.state.hoover.y}
-                orientation={this.state.hoover.orientation}
                 handleSubmit={this.handlHooverSubmit}
+                {...this.state.hoover}
               />
             </fieldset>
           </div>

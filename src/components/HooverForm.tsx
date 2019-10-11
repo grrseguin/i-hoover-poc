@@ -1,17 +1,11 @@
 import * as React from 'react';
-import { Orientation } from '../domain/Hoover';
+import { HooverShape, Orientation } from '../domain/Hoover';
 
-export interface IHooverFormProps {
-  handleSubmit: (gridSize: { x: number, y: number, orientation: Orientation }) => void;
-  x: number;
-  y: number;
-  orientation: Orientation
+export interface IHooverFormProps extends HooverShape {
+  handleSubmit: (gridSize: HooverShape) => void;
 }
 
-export interface IHooverFormStates {
-  x: number;
-  y: number;
-  orientation: Orientation
+export interface IHooverFormStates extends HooverShape {
 }
 
 export class HooverForm extends React.Component<IHooverFormProps, IHooverFormStates> {

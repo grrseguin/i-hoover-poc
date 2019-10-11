@@ -1,7 +1,8 @@
 @import '../../bootstrap/index.scss';
 
-.grid__cell_min_height {
-  min-height: $spacer * 2;
+.grid__cell_min_size {
+  min-width: 21px + 2;
+  min-height: 22px + 2;
 }
 
 .cell__hoover_north_orienation {

@@ -1,14 +1,11 @@
 import * as React from 'react';
+import { GridShape } from '../domain/Grid';
 
-export interface IGridFormProps {
-  handleSubmit: (gridSize: {x: number, y: number}) => void;
-  x: number;
-  y: number;
+export interface IGridFormProps extends GridShape {
+  handleSubmit: (gridSize: GridShape) => void;
 }
 
-export interface IGridFormStates {
-  x: number;
-  y: number;
+export interface IGridFormStates extends GridShape {
 }
 
 export class GridForm extends React.Component<IGridFormProps, IGridFormStates> {

@@ -1,38 +1,68 @@
 import React from 'react';
 import GridClass from '../domain/Grid';
-import { Orientation, Hoover } from '../domain/Hoover';
+import { GridShape } from '../domain/Grid';
+import { Hoover, HooverShape } from '../domain/Hoover';
 import Cell from './Cell/Cell';
 
-export interface IGridProps {
-  rowsLength: number;
-  colsLength: number;
-  hoover: {
-    x: number;
-    y: number;
-    orientation: Orientation
-  };
+export interface IGridProps extends GridShape {
+  hoover: HooverShape;
 }
 
 class Grid extends React.Component<IGridProps> {
-  public render() {
-    const grid = new GridClass({
-      rowsLength: parseInt(this.props.rowsLength as any, 10),
-      colsLength: parseInt(this.props.colsLength as any, 10),
-    });
-    const hoover = new Hoover({
+  constructor(props: IGridProps) {
+    super(props);
+
+    this.hoover = new Hoover({
       x: parseInt(this.props.hoover.x as any, 10),
       y: parseInt(this.props.hoover.y as any, 10),
       orientation: this.props.hoover.orientation,
+      grid: new GridClass({
+        x: parseInt(this.props.x as any, 10),
+        y: parseInt(this.props.y as any, 10),
+      })
     });
-    const rows = grid.cells.map(
-      (cells, iRow) =>
+  }
+
+  private hoover: Hoover;
+
+  shouldComponentUpdate(nextProps: IGridProps) {
+    if (
+      this.props.hoover.y !== nextProps.hoover.y ||
+      this.props.hoover.x !== nextProps.hoover.x
+    ) {
+      this.hoover.setX(parseInt(nextProps.hoover.x as any, 10));
+      this.hoover.setY(parseInt(nextProps.hoover.y as any, 10));
+      return true;
+    }
+    if (
+      this.props.x !== nextProps.x ||
+      this.props.y !== nextProps.y
+    ) {
+      this.hoover.setGrid(
+        new GridClass({
+          x: parseInt(nextProps.x as any, 10),
+          y: parseInt(nextProps.y as any, 10),
+        })
+      );
+      return true;
+    }
+    return false;
+  }
+
+  public render() {
+    const grid = this.hoover.grid.cells.map(
+      (cells, x) =>
         <div
-          className="d-flex flex-row justify-content-around"
-          key={iRow}
+          className="d-flex flex-column-reverse flex-fill justify-content-around"
+          key={x}
         >
           {
             cells.map(
-              (cell, iCol) => <Cell key={`${iRow}${iCol}`} hooverOrientation={hoover.isThere(iRow, iCol) ? hoover.getOrientation() : undefined} />
+              (cell, y) =>
+                <Cell
+                  key={`${y}${x}`}
+                  hooverOrientation={this.hoover.isMyPosition(x, y) ? this.hoover.getOrientation() : undefined}
+                />
             )
           }
         </div>
@@ -40,9 +70,9 @@ class Grid extends React.Component<IGridProps> {
 
     return (
         <div
-          className="d-flex flex-column-reverse bg-secondary"
+          className="d-flex flex-row bg-secondary"
         >
-          { rows }
+          { grid }
         </div>
     );
   }

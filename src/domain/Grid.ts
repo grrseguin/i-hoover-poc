@@ -1,33 +1,23 @@
 import Cell from './Cell';
 
 export interface GridShape {
-    rowsLength: number;
-    colsLength: number;
+    x: number;
+    y: number;
 }
 
 export class Grid {
-    readonly rowsLength: number;
-    readonly rowWidth = 25;
-    readonly colsLength: number;
-    readonly colHeight = 25;
+    readonly x: number;
+    readonly y: number;
     readonly cells: Cell[][];
 
     constructor(grid: GridShape){
-        this.rowsLength = grid.rowsLength;
-        this.colsLength = grid.colsLength;
-        this.cells = Array.from(new Array(grid.colsLength), (x, i) => i + 1)
+        this.x = grid.x;
+        this.y = grid.y;
+        this.cells = Array.from(new Array(grid.x), (x, i) => i)
           .map(() => Array
-            .from(new Array(grid.rowsLength), () => new Cell())
+            .from(new Array(grid.y), () => new Cell())
           )
         ;
-    }
-
-    getWidth(){
-        return this.rowsLength * this.rowWidth;
-    }
-
-    getHeight(){
-        return this.colsLength * this.colHeight;
     }
 }
 
