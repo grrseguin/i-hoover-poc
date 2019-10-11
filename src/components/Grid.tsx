@@ -9,8 +9,8 @@ export interface IGridProps {
 class Grid extends React.Component<IGridProps> {
   public render() {
     const grid = new GridClass({
-      rowsLength: this.props.rowsLength,
-      colsLength: this.props.colsLength,
+      rowsLength: parseInt(this.props.rowsLength as any, 10),
+      colsLength: parseInt(this.props.colsLength as any, 10),
     });
     const rows = grid.cells.map(
       (cells, iRow) =>
