@@ -1,5 +1,7 @@
 import React from 'react';
 import GridClass from '../domain/Grid';
+import { Orientation, Hoover } from '../domain/Hoover';
+import Cell from './Cell/Cell';
 
 export interface IGridProps {
   rowsLength: number
@@ -12,6 +14,11 @@ class Grid extends React.Component<IGridProps> {
       rowsLength: parseInt(this.props.rowsLength as any, 10),
       colsLength: parseInt(this.props.colsLength as any, 10),
     });
+    const hoover = new Hoover({
+      x: 0,
+      y: 0,
+      orientation: Orientation.North,
+    });
     const rows = grid.cells.map(
       (cells, iRow) =>
         <div
@@ -20,13 +27,7 @@ class Grid extends React.Component<IGridProps> {
         >
           {
             cells.map(
-              (cell, iCol) =>
-                <div
-                  className="flex-fill d-flex justify-content-center"
-                  key={iCol}
-                >
-                  ({iRow}, {iCol})
-                </div>
+              (cell, iCol) => <Cell key={`${iRow}${iCol}`} hooverOrientation={hoover.isThere(iRow, iCol) ? hoover.getOrientation() : undefined} />
             )
           }
         </div>

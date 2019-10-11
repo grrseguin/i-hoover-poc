@@ -1,0 +1,21 @@
+@import '../../bootstrap/index.scss';
+
+.grid__cell_min_height {
+  min-height: $spacer * 2;
+}
+
+.cell__hoover_north_orienation {
+  transform: rotate(0deg);
+}
+
+.cell__hoover_east_orienation {
+  transform: rotate(90deg);
+}
+
+.cell__hoover_south_orienation {
+  transform: rotate(180deg);
+}
+
+.cell__hoover_west_orienation {
+  transform: rotate(270deg);
+}
