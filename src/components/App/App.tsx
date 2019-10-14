@@ -69,21 +69,15 @@ export class App extends React.Component<IAppProps, IAppStates> {
             />
           </div>
           <div className="col-md-6">
-            <fieldset>
-              <GridForm handleSubmit={this.handleGridSubmit} {...this.state.grid} />
-            </fieldset>
-            <fieldset>
-              <HooverForm
-                handleSubmit={this.handlHooverSubmit}
-                {...this.state.hoover}
-              />
-            </fieldset>
-            <fieldset>
-              <HooverMovesForm
-                handleSubmit={this.handlHooverMovesSubmit}
-                moves={this.state.hooverMoves}
-              />
-            </fieldset>
+            <GridForm handleSubmit={this.handleGridSubmit} {...this.state.grid} />
+            <HooverForm
+              handleSubmit={this.handlHooverSubmit}
+              {...this.state.hoover}
+            />
+            <HooverMovesForm
+              handleSubmit={this.handlHooverMovesSubmit}
+              moves={this.state.hooverMoves}
+            />
           </div>
         </div>
       </div>
