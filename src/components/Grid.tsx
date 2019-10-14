@@ -48,12 +48,14 @@ export class Grid extends React.Component<IGridProps> {
     if (
       (
         this.props.hoover.y !== nextProps.hoover.y ||
-        this.props.hoover.x !== nextProps.hoover.x
+        this.props.hoover.x !== nextProps.hoover.x ||
+        this.props.hoover.orientation !== nextProps.hoover.orientation
       ) &&
       nextProps.submitOrigin === SubmitOrigin.HooverPosition
     ) {
       this.hoover.setX(parseInt(nextProps.hoover.x as any, 10));
       this.hoover.setY(parseInt(nextProps.hoover.y as any, 10));
+      this.hoover.setOrientation(parseInt(nextProps.hoover.orientation as any, 10));
       return true;
     }
 

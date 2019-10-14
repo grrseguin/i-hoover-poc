@@ -61,7 +61,11 @@ export class Hoover {
     return this.orientation;
   }
 
-  setOrientation(move: TurningMatchers){
+  setOrientation(orientation: Orientation){
+    this.orientation = orientation;
+  }
+
+  setOrientationByTurningKey(move: TurningMatchers){
     const newKey = this.orientation + move;
     const  orientationMatcher = Object.entries(OrientationMatchers).find(
       ([ key ]) => {
@@ -96,7 +100,7 @@ export class Hoover {
       step => {
         const turningMatcher = this.getTurningMatcher(step);
         if (turningMatcher !== undefined) {
-          this.setOrientation(turningMatcher[1] as TurningMatchers);
+          this.setOrientationByTurningKey(turningMatcher[1] as TurningMatchers);
         } else if (step === goForwardKey) {
           const grid = this.getCell();
           if (grid !== undefined) {
