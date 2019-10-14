@@ -9,7 +9,7 @@ export interface IGridProps extends GridShape {
   hooverMoves: string;
 }
 
-class Grid extends React.Component<IGridProps> {
+export class Grid extends React.Component<IGridProps> {
   constructor(props: IGridProps) {
     super(props);
 
@@ -70,7 +70,7 @@ class Grid extends React.Component<IGridProps> {
                 <Cell
                   key={`${y}${x}`}
                   hooverOrientation={this.hoover.isMyPosition(x, y) ? this.hoover.getOrientation() : undefined}
-                  visited={cell.visited}
+                  visited={cell.getVisited()}
                 />
             )
           }

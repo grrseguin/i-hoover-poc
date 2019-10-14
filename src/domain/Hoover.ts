@@ -41,9 +41,9 @@ const goForwardMatcher = {
 }
 
 export class Hoover {
-  x: number;
-  y: number;
-  orientation: Orientation;
+  private x: number;
+  private y: number;
+  private orientation: Orientation;
   grid: Grid;
 
   constructor(hoover: HooverShapeInGrid){
@@ -129,7 +129,6 @@ export class Hoover {
         this.setX(this.x + goForwardMatcher[this.orientation])
         break;
     }
-
   }
 
   private getTurningMatcher(letter: string){
