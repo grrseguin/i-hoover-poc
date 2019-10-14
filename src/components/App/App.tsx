@@ -6,6 +6,12 @@ import GridForm from '../GridForm';
 import HooverForm from '../HooverForm';
 import HooverMovesForm from '../HooverMovesForm';
 
+export enum SubmitOrigin {
+  Grid,
+  HooverPosition,
+  HooverMoves,
+}
+
 export interface IAppProps {
 }
 
@@ -13,6 +19,7 @@ export interface IAppStates {
   grid: GridShape;
   hoover: HooverShape;
   hooverMoves: string;
+  submitOrigin?: SubmitOrigin;
 }
 
 export class App extends React.Component<IAppProps, IAppStates> {
@@ -38,6 +45,7 @@ export class App extends React.Component<IAppProps, IAppStates> {
       grid: {
         ...gridSize
       },
+      submitOrigin: SubmitOrigin.Grid,
     });
   }
 
@@ -46,7 +54,8 @@ export class App extends React.Component<IAppProps, IAppStates> {
       ...this.state,
       hoover: {
         ...hooverPosition,
-      }
+      },
+      submitOrigin: SubmitOrigin.HooverPosition,
     });
   }
 
@@ -54,6 +63,7 @@ export class App extends React.Component<IAppProps, IAppStates> {
     this.setState({
       ...this.state,
       hooverMoves,
+      submitOrigin: SubmitOrigin.HooverMoves,
     });
   }
 
@@ -65,6 +75,7 @@ export class App extends React.Component<IAppProps, IAppStates> {
             <Grid
               hoover={this.state.hoover}
               hooverMoves={this.state.hooverMoves}
+              submitOrigin={this.state.submitOrigin}
               {...this.state.grid}
             />
           </div>

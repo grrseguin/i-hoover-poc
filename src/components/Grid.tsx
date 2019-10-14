@@ -3,10 +3,12 @@ import GridClass from '../domain/Grid';
 import { GridShape } from '../domain/Grid';
 import { Hoover, HooverShape } from '../domain/Hoover';
 import Cell from './Cell/Cell';
+import { SubmitOrigin } from './App/App';
 
 export interface IGridProps extends GridShape {
   hoover: HooverShape;
   hooverMoves: string;
+  submitOrigin?: SubmitOrigin;
 }
 
 export class Grid extends React.Component<IGridProps> {
@@ -28,8 +30,11 @@ export class Grid extends React.Component<IGridProps> {
 
   shouldComponentUpdate(nextProps: IGridProps) {
     if (
-      this.props.x !== nextProps.x ||
-      this.props.y !== nextProps.y
+      (
+        this.props.x !== nextProps.x ||
+        this.props.y !== nextProps.y
+      ) &&
+      nextProps.submitOrigin === SubmitOrigin.Grid
     ) {
       this.hoover.setGrid(
         new GridClass({
@@ -41,15 +46,21 @@ export class Grid extends React.Component<IGridProps> {
     }
 
     if (
-      this.props.hoover.y !== nextProps.hoover.y ||
-      this.props.hoover.x !== nextProps.hoover.x
+      (
+        this.props.hoover.y !== nextProps.hoover.y ||
+        this.props.hoover.x !== nextProps.hoover.x
+      ) &&
+      nextProps.submitOrigin === SubmitOrigin.HooverPosition
     ) {
       this.hoover.setX(parseInt(nextProps.hoover.x as any, 10));
       this.hoover.setY(parseInt(nextProps.hoover.y as any, 10));
       return true;
     }
 
-    if (nextProps.hooverMoves !== undefined) {
+    if (
+      nextProps.hooverMoves !== undefined &&
+      nextProps.submitOrigin === SubmitOrigin.HooverMoves
+    ) {
       this.hoover.move(nextProps.hooverMoves);
       return true;
     }
