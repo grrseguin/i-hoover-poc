@@ -3,8 +3,8 @@ import Grid from './Grid';
 export enum Orientation {
   North,
   East,
-  West,
   South,
+  West,
 }
 
 export interface HooverShape {
@@ -15,6 +15,29 @@ export interface HooverShape {
 
 export interface HooverShapeInGrid extends HooverShape {
   readonly grid: Grid;
+}
+
+enum TurningMatchers {
+  d = 1,
+  g = -1,
+};
+
+const OrientationMatchers = {
+  4: Orientation.North,
+  0: Orientation.North,
+  1: Orientation.East,
+  2: Orientation.South,
+  3: Orientation.West,
+  [-1]: Orientation.West,
+};
+
+const goForwardKey = 'a';
+
+const goForwardMatcher = {
+  [Orientation.North]: 1,
+  [Orientation.South]: -1,
+  [Orientation.East]: 1,
+  [Orientation.West]: -1,
 }
 
 export class Hoover {
@@ -38,6 +61,19 @@ export class Hoover {
     return this.orientation;
   }
 
+  setOrientation(move: TurningMatchers){
+    const newKey = this.orientation + move;
+    const  orientationMatcher = Object.entries(OrientationMatchers).find(
+      ([ key ]) => {
+        return key === newKey.toString()
+      }
+    );
+
+    if (orientationMatcher !== undefined) {
+      this.orientation = orientationMatcher[1];
+    }
+  }
+
   setX(x: number){
     this.x = x;
   }
@@ -48,6 +84,48 @@ export class Hoover {
 
   setGrid(grid: Grid){
     this.grid = grid;
+  }
+
+  move(way: string){
+    const steps = way
+      .trim()
+      .toLowerCase()
+      .split('');
+
+    steps.forEach(
+      step => {
+        const turningMatcher = this.getTurningMatcher(step);
+        if (turningMatcher !== undefined) {
+          this.setOrientation(turningMatcher[1] as TurningMatchers);
+        } else if (step === goForwardKey) {
+          this.goForward();
+        }
+      }
+    );
+
+    return this;
+  }
+
+  private goForward(){
+    switch (this.orientation) {
+      case Orientation.North:
+      case Orientation.South:
+        this.setY(this.y + goForwardMatcher[this.orientation])
+        break;
+      case Orientation.West:
+      case Orientation.East:
+        this.setX(this.x + goForwardMatcher[this.orientation])
+        break;
+    }
+
+  }
+
+  private getTurningMatcher(letter: string){
+    const turningMatcher = Object.entries(TurningMatchers).find(
+      ([ key ]) => key === letter
+    );
+
+    return turningMatcher;
   }
 }
 

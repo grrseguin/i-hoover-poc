@@ -78,7 +78,7 @@ export class HooverForm extends React.Component<IHooverFormProps, IHooverFormSta
             }
           </select>
         </div>
-        <button type="submit" className="btn btn-primary">Draw grid</button>
+        <button type="submit" className="btn btn-primary">Initialize hoover position</button>
       </form>
     );
   }

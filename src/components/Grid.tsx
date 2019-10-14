@@ -6,6 +6,7 @@ import Cell from './Cell/Cell';
 
 export interface IGridProps extends GridShape {
   hoover: HooverShape;
+  hooverMoves: string;
 }
 
 class Grid extends React.Component<IGridProps> {
@@ -27,14 +28,6 @@ class Grid extends React.Component<IGridProps> {
 
   shouldComponentUpdate(nextProps: IGridProps) {
     if (
-      this.props.hoover.y !== nextProps.hoover.y ||
-      this.props.hoover.x !== nextProps.hoover.x
-    ) {
-      this.hoover.setX(parseInt(nextProps.hoover.x as any, 10));
-      this.hoover.setY(parseInt(nextProps.hoover.y as any, 10));
-      return true;
-    }
-    if (
       this.props.x !== nextProps.x ||
       this.props.y !== nextProps.y
     ) {
@@ -46,6 +39,21 @@ class Grid extends React.Component<IGridProps> {
       );
       return true;
     }
+
+    if (
+      this.props.hoover.y !== nextProps.hoover.y ||
+      this.props.hoover.x !== nextProps.hoover.x
+    ) {
+      this.hoover.setX(parseInt(nextProps.hoover.x as any, 10));
+      this.hoover.setY(parseInt(nextProps.hoover.y as any, 10));
+      return true;
+    }
+
+    if (nextProps.hooverMoves !== undefined) {
+      this.hoover.move(nextProps.hooverMoves);
+      return true;
+    }
+
     return false;
   }
 

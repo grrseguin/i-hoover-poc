@@ -4,6 +4,7 @@ import { HooverShape, Orientation } from '../../domain/Hoover';
 import Grid from '../Grid';
 import GridForm from '../GridForm';
 import HooverForm from '../HooverForm';
+import HooverMovesForm from '../HooverMovesForm';
 
 export interface IAppProps {
 }
@@ -11,6 +12,7 @@ export interface IAppProps {
 export interface IAppStates {
   grid: GridShape;
   hoover: HooverShape;
+  hooverMoves: string;
 }
 
 export class App extends React.Component<IAppProps, IAppStates> {
@@ -22,10 +24,11 @@ export class App extends React.Component<IAppProps, IAppStates> {
         y: 10,
       },
       hoover: {
-        x: 0,
-        y: 0,
+        x: 5,
+        y: 5,
         orientation: Orientation.North,
       },
+      hooverMoves: 'DADADADAA',
     };
   }
 
@@ -47,6 +50,13 @@ export class App extends React.Component<IAppProps, IAppStates> {
     });
   }
 
+  handlHooverMovesSubmit = (hooverMoves: string) => {
+    this.setState({
+      ...this.state,
+      hooverMoves,
+    });
+  }
+
   public render() {
     return (
       <div className="container">
@@ -54,6 +64,7 @@ export class App extends React.Component<IAppProps, IAppStates> {
           <div className="col-md-6">
             <Grid
               hoover={this.state.hoover}
+              hooverMoves={this.state.hooverMoves}
               {...this.state.grid}
             />
           </div>
@@ -65,6 +76,12 @@ export class App extends React.Component<IAppProps, IAppStates> {
               <HooverForm
                 handleSubmit={this.handlHooverSubmit}
                 {...this.state.hoover}
+              />
+            </fieldset>
+            <fieldset>
+              <HooverMovesForm
+                handleSubmit={this.handlHooverMovesSubmit}
+                moves={this.state.hooverMoves}
               />
             </fieldset>
           </div>
