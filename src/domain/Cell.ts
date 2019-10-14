@@ -1,5 +1,9 @@
 export class Cell {
-  readonly visited: boolean = false;
+  visited: boolean = false;
+
+  setVisited(){
+    this.visited = true;
+  }
 }
 
 export default Cell;

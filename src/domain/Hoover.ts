@@ -98,12 +98,24 @@ export class Hoover {
         if (turningMatcher !== undefined) {
           this.setOrientation(turningMatcher[1] as TurningMatchers);
         } else if (step === goForwardKey) {
+          const grid = this.getCell();
+          if (grid !== undefined) {
+            this.grid.cells[this.x][this.y].setVisited();
+          }
           this.goForward();
         }
       }
     );
 
     return this;
+  }
+
+  private getCell(){
+    try {
+      return this.grid.cells[this.x][this.y];
+    } catch (error) {
+      console.error('hoover out of grid bounds');
+    }
   }
 
   private goForward(){

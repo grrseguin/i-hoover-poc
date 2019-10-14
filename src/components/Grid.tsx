@@ -70,6 +70,7 @@ class Grid extends React.Component<IGridProps> {
                 <Cell
                   key={`${y}${x}`}
                   hooverOrientation={this.hoover.isMyPosition(x, y) ? this.hoover.getOrientation() : undefined}
+                  visited={cell.visited}
                 />
             )
           }

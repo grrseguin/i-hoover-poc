@@ -6,13 +6,24 @@ import hooverImg from './hoover.svg';
 
 export interface Props {
   hooverOrientation?: Orientation;
+  visited: boolean;
 }
 
 export class Cell extends PureComponent<Props> {
   render() {
     return (
       <div
-        className="flex-fill d-flex justify-content-center grid__cell_min_size border border-dark"
+        className={classNames(
+          'flex-fill',
+          'd-flex',
+          'justify-content-center',
+          'grid__cell_min_size',
+          'border',
+          'border-dark',
+          {
+            'grid__cell_visited': this.props.visited,
+          },
+        )}
       >
         {
           this.props.hooverOrientation !== undefined &&

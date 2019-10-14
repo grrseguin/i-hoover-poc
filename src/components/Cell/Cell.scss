@@ -20,3 +20,7 @@
 .cell__hoover_west_orienation {
   transform: rotate(270deg);
 }
+
+.grid__cell_visited {
+  background-color: $success;
+}
