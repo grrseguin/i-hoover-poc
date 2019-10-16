@@ -1,10 +1,10 @@
 import Grid from './Grid';
 
 export enum Orientation {
-  North,
-  East,
-  South,
-  West,
+  North = 0,
+  East = 90,
+  South = 180,
+  West = 270,
 }
 
 export interface HooverShape {
@@ -18,17 +18,17 @@ export interface HooverShapeInGrid extends HooverShape {
 }
 
 enum TurningMatchers {
-  d = 1,
-  g = -1,
+  d = 90,
+  g = -90,
 };
 
 const OrientationMatchers = {
-  4: Orientation.North,
-  0: Orientation.North,
-  1: Orientation.East,
-  2: Orientation.South,
-  3: Orientation.West,
-  [-1]: Orientation.West,
+  [Orientation.West + TurningMatchers.d]: Orientation.North,
+  [Orientation.North]: Orientation.North,
+  [Orientation.East]: Orientation.East,
+  [Orientation.South]: Orientation.South,
+  [Orientation.West]: Orientation.West,
+  [Orientation.North + TurningMatchers.g]: Orientation.West,
 };
 
 const goForwardKey = 'a';

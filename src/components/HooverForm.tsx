@@ -72,8 +72,8 @@ export class HooverForm extends React.Component<IHooverFormProps, IHooverFormSta
             onChange={this.handleChangeOrientation}
           >
             {
-              Object.keys(Orientation).slice(4).map(
-                (orientationName, i) => <option key={orientationName} value={i}>{orientationName}</option>
+              Object.entries(Orientation).slice(4).map(
+                ([orientationName, orientationValue]) => <option key={orientationName} value={orientationValue}>{orientationName}</option>
               )
             }
           </select>
