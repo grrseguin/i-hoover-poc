@@ -102,9 +102,9 @@ export class Hoover {
         if (turningMatcher !== undefined) {
           this.setOrientationByTurningKey(turningMatcher[1] as TurningMatchers);
         } else if (step === goForwardKey) {
-          const grid = this.getCell();
-          if (grid !== undefined) {
-            this.grid.cells[this.x][this.y].setVisited();
+          const cell = this.getCell();
+          if (cell !== undefined) {
+            cell.setVisited();
           }
           this.goForward();
         }
